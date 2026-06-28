@@ -4,15 +4,11 @@ workflows:
     environment:
       java: 17
     scripts:
-      - name: Install Gradle
-        script: |
-          curl -L https://services.gradle.org/distributions/gradle-8.4-bin.zip -o gradle-8.4-bin.zip
-          unzip -q gradle-8.4-bin.zip -d /usr/local/gradle
-          export PATH="/usr/local/gradle/gradle-8.4/bin:$PATH"
-          gradle --version
       - name: Build APK
         script: |
-          export PATH="/usr/local/gradle/gradle-8.4/bin:$PATH"
+          curl -L https://services.gradle.org/distributions/gradle-8.4-bin.zip -o gradle.zip
+          unzip -q gradle.zip -d $HOME/gradle
+          export PATH="$HOME/gradle/gradle-8.4/bin:$PATH"
           gradle assembleDebug
     artifacts:
       - app/build/outputs/apk/debug/*.apk
