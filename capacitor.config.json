@@ -1,0 +1,9 @@
+{
+  "appId": "com.monapp.mobile",
+  "appName": "Mon App Mobile",
+  "webDir": "www",
+  "server": {
+    "url": "https://your-website.com",
+    "cleartext": true
+  }
+}
