@@ -7,11 +7,17 @@ workflows:
       java: 17
       node: v18
     scripts:
-      - name: Setup and Build
+      - name: Install dependencies
         script: |
-          set -e
           npm install
+      - name: Install Capacitor
+        script: |
+          npm install @capacitor/cli @capacitor/core @capacitor/android
+      - name: Initialize Capacitor Android
+        script: |
           npx cap add android
+      - name: Build Android
+        script: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
