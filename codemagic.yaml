@@ -1,16 +1,22 @@
 workflows:
-  react-native-android:
+  android-build:
     name: Build Android App
+    instance_type: mac_mini_m2
     max_build_duration: 60
-    instance_type: mac_mini_m1
     environment:
-      node: 20
+      node: v18
     scripts:
+      - name: Initialize Android structure
+        script: |
+          npx react-native@0.72.0 init TemplateApp --skip-git-init --skip-install
+          cp -r TemplateApp/android ./android
+          rm -rf TemplateApp
       - name: Install dependencies
         script: npm install
-      - name: Build Android
+      - name: Build Android APK
         script: |
           cd android
+          chmod +x ./gradlew
           ./gradlew assembleRelease
     artifacts:
-      - android/app/build/outputs/apk/release/app-release-unsigned.apk
+      - android/app/build/outputs/**/*.apk
