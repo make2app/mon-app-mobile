@@ -6,17 +6,21 @@ workflows:
     environment:
       node: v18
     scripts:
-      - name: Initialize Android structure
+      - name: Setup and Build
         script: |
-          npx react-native@0.72.0 init TemplateApp --skip-git-init --skip-install
-          cp -r TemplateApp/android ./android
-          rm -rf TemplateApp
-      - name: Install dependencies
-        script: npm install
-      - name: Build Android APK
-        script: |
+          set -e
+          echo ">>> Working dir: $(pwd)"
+          npm install
+          echo ">>> Init React Native template..."
+          npx react-native@0.72.0 init RNBridge --skip-git-init --skip-install
+          echo ">>> Copy android folder..."
+          cp -r RNBridge/android ./android
+          rm -rf RNBridge
+          echo ">>> Contents:"
+          ls -la
+          echo ">>> Building APK..."
           cd android
-          chmod +x ./gradlew
+          chmod +x gradlew
           ./gradlew assembleRelease
     artifacts:
       - android/app/build/outputs/**/*.apk
